@@ -15,8 +15,8 @@ const initialQuery = 'word'; // other possibilities: 'idea'
 
 function createURL(word) {
   const url = 'https://api.sketchengine.co.uk/corpus/thes?';
-  const query = `corpname=bawe2;lemma=${word};lpos=;format=json;`;
-  const auth = 'api_key=TDCUT743C1RI1X4FQBS28EX5IHHEFJGY;username=LuciaKoc';
+  const query = `corpname=aclarc_1;lemma=${word};lpos=;format=json;`;
+  const auth = 'api_key=2W5RJUUSBU03Z5CRFIL8NS268MMH2BH1;username=LuciaKoc';
 
   return `${url}${query}${auth}`;
 }
