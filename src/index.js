@@ -2,6 +2,7 @@ import * as d3 from 'd3';
 import tip from 'd3-tip';
 
 import $ from 'jquery';
+import debounce from 'lodash/debounce';
 
 import { RadialViz, parseURL } from 'ske-viz';
 
@@ -12,14 +13,7 @@ let middlePosition;
 
 // initial query word - 'word'
 const initialQuery = 'word'; // other possibilities: 'idea'
-
-function createURL(word) {
-  const url = 'https://api.sketchengine.co.uk/corpus/thes?';
-  const query = `corpname=aclarc_1;lemma=${word};lpos=;format=json;`;
-  const auth = 'api_key=2W5RJUUSBU03Z5CRFIL8NS268MMH2BH1;username=LuciaKoc';
-
-  return `${url}${query}${auth}`;
-}
+let queryWord;
 
 function createRadial(data) {
   return RadialViz(data,
@@ -80,14 +74,10 @@ function toggleNotification(show, text) {
       notificationText = text;
     }
 
-    // approximate height
-    const rows = Math.ceil(text.length / 35);
-    const height = rows * 25;
-
     notification
       .fadeIn()
       .css({
-        top: middlePosition.top - 30 - height,
+        top: middlePosition.top - 50,
         left: middlePosition.left - 150
       })
       .text(notificationText);
@@ -178,46 +168,6 @@ function wordClick(d) {
   } else {
     // otherwise change query word to the clicked word
     submit(d.text);
-  }
-}
-
-function submit(value) {
-  toggleInput(false, false, false);
-
-  $('#loading').fadeIn();
-
-  if (value) {
-    // accept only one word - first if there are more typed in
-    const newWord = value.split(' ')[0].split(';')[0];
-
-    toggleEventsOnContainer(false);
-
-    tooltip.hide();
-
-    // create new query and update vis
-    parseURL(createURL(newWord), 'THES')
-      .then(data => {
-
-        viz = viz.update(data);
-
-        $('#loading').fadeOut();
-
-        toggleInput(true, false, false);
-
-        toggleEventsOnContainer(true, true);
-
-        history.pushState({ 'text': newWord }, `Word - ${newWord}`, `?${newWord}`);
-      }, error => {
-
-        $('#loading').fadeOut();
-
-        toggleNotification(true, error);
-      });
-
-  } else {
-
-    // show info in tooltip
-    toggleNotification(true, 'Please enter a word');
   }
 }
 
@@ -423,32 +373,120 @@ function animateText() {
 
 }
 
-(function init() {
+function createURL(word) {
+  const url = 'https://api.sketchengine.co.uk/corpus/thes?';
+  const query = `corpname=aclarc_1;lemma=${word};lpos=;format=json;`;
+  const auth = 'api_key=866OO8C77EYVME7VUFR0E00GO3G2RTCQ;username=visualisations';
 
-  // animate the text containing explanations
-  animateText();
+  return `${url}${query}${auth}`;
+}
 
-  toggleEventsOnContainer(false);
+function submit(value) {
+  toggleInput(false, false, false);
 
-  params = getParams();
+  $('#loading').fadeIn();
 
-  // check if the URL states a word that should be shown
-  const query = window.location.search ? window.location.search.substring(1) : initialQuery;
+  if (value) {
+    // accept only one word - first if there are more typed in
+    const newWord = value.split(' ')[0].split(';')[0];
 
-  // create visualization and keep reference to it
-  parseURL(createURL(query), 'THES')
+    toggleEventsOnContainer(false);
+
+    tooltip.hide();
+
+    // create new query and update vis
+    parseURL(createURL(newWord), 'THES')
+      .then(data => {
+
+        viz = viz.update(data);
+
+        queryWord = newWord;
+
+        // can take time, needs to be after the update function was called
+        $('#loading').fadeOut();
+
+        toggleInput(true, false, false);
+
+        toggleEventsOnContainer(true, true);
+
+        updateButtons();
+
+        history.pushState({ 'text': newWord }, `Word - ${newWord}`, `?${newWord}`);
+      }, error => {
+
+        $('#loading').fadeOut();
+
+        toggleNotification(true, error);
+      });
+
+  } else {
+
+    // show info in tooltip
+    toggleNotification(true, 'Please enter a word');
+
+    $('#loading').fadeOut();
+  }
+}
+
+function rerenderViz() {
+  parseURL(createURL(queryWord), 'THES')
     .then(data => {
-      tooltip = tip()
-        .attr('class', 'd3-tip')
-        .offset([-6, 0])
-        .html(tooltipContent);
+
+      // remove the old svg and recreate it with new params
+      $('svg').remove();
 
       viz = createRadial(data);
 
+      // can take time, needs to be after the update function was called
+      $('#loading').fadeOut();
+
+      toggleInput(true, false, false);
+
       toggleEventsOnContainer(true, true);
 
-      viz._svg.call(tooltip);
+      updateButtons();
 
-      addInput();
+    }, error => {
+
+      $('#loading').fadeOut();
+
+      toggleNotification(true, error);
     });
+}
+
+(function init() {
+
+  if ($('#viz-wrapper').length) {
+    // animate the text containing explanations
+    animateText();
+
+    toggleEventsOnContainer(false);
+
+    params = getParams();
+
+    // check if the URL states a word that should be shown
+    const query = window.location.search ? window.location.search.substring(1) : initialQuery;
+
+    // create visualization and keep reference to it
+    parseURL(createURL(query), 'THES')
+      .then(data => {
+        tooltip = tip()
+          .attr('class', 'd3-tip')
+          .offset([-6, 0])
+          .html(tooltipContent);
+
+        queryWord = query;
+
+        viz = createRadial(data);
+
+        toggleEventsOnContainer(true, true);
+
+        viz._svg.call(tooltip);
+
+        addInput();
+      });
+
+    $(window).on('resize', debounce(rerenderViz, 300));
+  }
+
 })();
