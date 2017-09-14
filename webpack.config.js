@@ -19,7 +19,8 @@ if (env === 'build') {
 const config = {
   context: __dirname,
   entry: [
-    __dirname + '/src/index.js'
+    __dirname + '/src/index.js',
+    __dirname + '/src/differences.js'
   ],
   devtool: 'source-map',
   devServer: {

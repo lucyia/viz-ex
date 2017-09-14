@@ -36,7 +36,8 @@
     "d3": "^4.10.0",
     "d3-tip": "0.8.0-alpha.1",
     "jquery": "^3.2.1",
-    "ske-viz": "^0.2.0"
+    "lodash": "^4.17.4",
+    "ske-viz": "^0.3.0"
   },
   "devDependencies": {
     "babel-cli": "6.24.1",
