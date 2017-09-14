@@ -18,22 +18,22 @@
     <meta name="theme-color" content="#ffffff">
 
     <!-- Search Engine -->
-    <meta name="description" content="Interactive Data Visualization of Thesaurus automatically generated from data">
+    <meta name="description" content="Interactive Data Visualization of words' differences automatically generated from data">
     <meta name="image" content="/img/viz.png">
     <!-- Schema.org for Google -->
     <meta itemprop="name" content="VizEx">
-    <meta itemprop="description" content="Interactive Data Visualization of Thesaurus automatically generated from data">
+    <meta itemprop="description" content="Interactive Data Visualization of words' differences automatically generated from data">
     <meta itemprop="image" content="/img/viz.png">
     <!-- Twitter -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="VizEx">
-    <meta name="twitter:description" content="Interactive Data Visualization of Thesaurus automatically generated from data">
+    <meta name="twitter:description" content="Interactive Data Visualization of words' differences automatically generated from data">
     <meta name="twitter:site" content="@_lucyia">
     <meta name="twitter:creator" content="@_lucyia">
     <meta name="twitter:image:src" content="/img/viz.png">
     <!-- Open Graph general (Facebook, Pinterest & Google+) -->
     <meta name="og:title" content="VizEx">
-    <meta name="og:description" content="Interactive Data Visualization of Thesaurus automatically generated from data">
+    <meta name="og:description" content="Interactive Data Visualization of words' differences automatically generated from data">
     <meta name="og:image" content="/img/viz.png">
     <meta name="og:url" content="http://lucyia.github.io/words-viz/">
     <meta name="og:site_name" content="VizEx">
@@ -64,13 +64,18 @@
       <div class="row align-items-center">
 
           <div class="col-md-12 col-lg-8 col-viz">
-            <div id="viz-wrapper-diff"></div>
+            <div id="words-wrapper">
+              <span id="word-left" class="word-label">left</span>
+              <span class="word-label">vs</span>
+              <span id="word-right" class="word-label">right</span>
+            </div>
             <div id="options-wrapper">
               <a class="option active" data-value="0" title="for example: small book" href="javascript:void(0)">modifiers of ...</a>
               <a class="option" data-value="1" title="for example: book has" href="javascript:void(0)">verbs with ... as subject</a>
               <a class="option" data-value="2" title="for example: read a book " href="javascript:void(0)">verbs with ... as object</a>
               <a class="option" data-value="3" title="for example: book and / or magazine" href="javascript:void(0)">words and / or ...</a>
             </div>
+            <div id="viz-wrapper-diff"></div>
             <div id="word-input-left-wrapper" class="word-input-wrapper form-group-input form-group row">
               <input class="form-control word-input" type="text" id="word-input-left">
             </div>
@@ -119,7 +124,7 @@
                   hovering over the words or by clicking on the circles surrounding the words.
                 </p>
                 <p class="info-intro-animate">
-                  To change the query, i.e. a word, you can either click on a surrounding word or enter a new query
+                  To change the query, i.e. words, you can either click on a surrounding word or enter a new query
                   word into search field. Simply click on a word on left or on right and a type field will appear,
                   enabling you to enter new query words.
                 </p>
@@ -128,26 +133,26 @@
               <div class="data">
                 <h3 class="info-intro-animate">Data</h3>
                 <p class="info-intro-animate">
-                  The thesaurus was automatically generated based on algorithms that look for words which appear
-                  in contexts to the query word using corpus analysis
-                  tool <a href="www.sketchengine.co.uk/" target="_blank">SketchEngine</a>.
+                  The differences were automatically generated based on algorithms that look for words which appear
+                  in contexts to the query words using corpus analysis
+                  tool <a href="//sketchengine.co.uk/" target="_blank">SketchEngine</a>.
                 </p>
                 <p class="info-intro-animate">
                   The underlying data was taken from
-                  <a href="acl-arc.comp.nus.edu.sg/" target="_blank">ACL Anthology Reference Corpus</a>,
+                  <a href="//acl-arc.comp.nus.edu.sg/" target="_blank">ACL Anthology Reference Corpus</a>,
                   a collection of scientific papers about Computational Linguistics.
                 </p>
               </div>
 
               <div class="author">
-                <p class="info-intro-animate">Made with ✗ by <a href='http://www.lucyia.com' target='_blank'>lucyia</a>
+                <p class="info-intro-animate">Made with ✗ by <a href='//www.lucyia.com' target='_blank'>lucyia</a>
                   in 2017.</p>
               </div>
             </div>
 
             <div class="inner info info-legend">
               <h3 class="info-intro-animate">Key</h3>
-              <img src="legend_diff.svg" alt="legend" class="info-intro-animate" />
+              <img src="legend_diff.svg" alt="legend" class="info-intro-animate info-key-diff" />
             </div>
 
         </div>

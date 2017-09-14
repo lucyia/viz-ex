@@ -139,8 +139,8 @@ function toggleInput(showContainer, showCheck, showClose) {
 
   // delete anything that has been written before
   input.val('');
-  // put focus on input so that typoing can be done immediately
-  input.focus();
+  // put focus on input so that typing can be done immediately
+  $('#word-input-left').focus();
 
   // display check button
   $('#button-check').css({
@@ -236,15 +236,15 @@ function positionInputs() {
   // left input wrapper
   $('#word-input-left-wrapper')
     .css({
-      'top': middlePosition ? middlePosition.top - 110 : 0,
-      'left': middlePosition ? middlePosition.left - inputWidth / 2 : 0
+      'top': middlePosition ? middlePosition.top - 80 : 0,
+      'left': middlePosition ? middlePosition.left - inputWidth * 1.25 : 0
     });
 
   // right input wrapper
   $('#word-input-right-wrapper')
     .css({
       'top': middlePosition ? middlePosition.top - 80 : 0,
-      'left': middlePosition ? middlePosition.left - inputWidth / 2 : 0
+      'left': middlePosition ? middlePosition.left + inputWidth * 0.25 : 0
     });
 
   // left input
@@ -263,7 +263,7 @@ function positionInputs() {
   $('#word-input-right')
     .css({
       'width': inputWidth,
-      'border-color': viz._scale.scoreColor.range()[1]
+      'border-color': viz._scale.scoreColor.range()[0]
     })
     .keydown(function inputChange(event) {
       if (event.keyCode === 13) {
@@ -305,7 +305,7 @@ function toggleInputsNotification() {
   updateButtons();
 
   history.pushState({ 'left': queryLeft, 'right': queryRight },
-    `Word - ${queryRight}`, `?left=${queryLeft};right=${queryRight}`);
+    `Words - ${queryRight} - ${queryLeft}`, `?left=${queryRight};right=${queryLeft}`); // words are switched
 }
 
 function getSimilarityText(score) {
@@ -381,21 +381,21 @@ function getParams() {
 
   const minSize = 0;
 
-  if (width < 500 || height < 500) {
-    margin = { top: 50, right: 10, bottom: 30, left: 10 };
+  if (width < 400 || height < 400) {
+    margin = { top: 30, right: 10, bottom: 30, left: 10 };
     maxItems = 4;
     tickNumber = 2;
     circleSize = [minSize, 30];
     textSize = [13, 28];
-  } else if (width < 700 || height < 700) {
-    margin = { top: 50, right: 10, bottom: 30, left: 10 };
-    maxItems = 7;
+  } else if (width < 700 || height < 500) {
+    margin = { top: 30, right: 10, bottom: 30, left: 10 };
+    maxItems = 10;
     tickNumber = 5;
     circleSize = [minSize, 30];
     textSize = [13, 28];
   } else {
-    margin = { top: 120, right: 80, bottom: 80, left: 80 };
-    maxItems = 10;
+    margin = { top: 20, right: 80, bottom: 80, left: 80 };
+    maxItems = 20;
     tickNumber = 7;
     circleSize = [minSize, 50];
     textSize = [13, 40];
@@ -424,6 +424,21 @@ function animateText() {
 
 function animateOptions() {
   $('#options-wrapper').delay(2500).fadeTo(1000, 1);
+
+  $('#words-wrapper').delay(2000).fadeTo(1000, 1);
+}
+
+function updateWordLabels() {
+  $('#word-left').css({
+    color: d3.color(viz._scale.scoreColor.range()[0]).brighter(1)
+  });
+
+  $('#word-right').css({
+    color: d3.color(viz._scale.scoreColor.range()[1]).brighter(1)
+  });
+
+  $('#word-left').text(queryRight);
+  $('#word-right').text(queryLeft);
 }
 
 function createFontSizeScale() {
@@ -455,6 +470,8 @@ function rerenderViz() {
 
       try {
         viz = createOpposite(data, selectedOption);
+
+        updateWordLabels();
 
         createFontSizeScale();
 
@@ -490,7 +507,7 @@ function addOptionListeners() {
   });
 }
 
-function submit(valueLeft, valueRight) {
+function submit(valueRight, valueLeft) {
   toggleInput(false, false, false);
 
   $('#loading').fadeIn();
@@ -510,6 +527,8 @@ function submit(valueLeft, valueRight) {
 
         viz = viz.update(data);
 
+        updateWordLabels();
+
         toggleInputsNotification();
 
         createFontSizeScale();
@@ -525,7 +544,7 @@ function submit(valueLeft, valueRight) {
   } else {
 
     // show info in tooltip
-    toggleNotification(true, 'Please enter a word');
+    toggleNotification(true, 'Please enter two words');
 
     $('#loading').fadeOut();
   }
@@ -565,6 +584,8 @@ function submit(valueLeft, valueRight) {
           .html(tooltipContent);
 
         viz = createOpposite(data, selectedOption);
+
+        updateWordLabels();
 
         createFontSizeScale();
 

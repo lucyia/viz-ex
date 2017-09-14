@@ -11,6 +11,8 @@ let tooltip;
 let params;
 let middlePosition;
 
+const inputWidth = 120;
+
 // initial query word - 'word'
 const initialQuery = 'word'; // other possibilities: 'idea'
 let queryWord;
@@ -94,15 +96,15 @@ function toggleNotification(show, text) {
   }
 }
 
-function updateButtons() {
+function updateButtonPositions() {
   // update position
   $('#button-close').css({
-    'top': middlePosition.top - 60,
+    'top': middlePosition.top - 100,
     'left': middlePosition.left - 15
   });
 
   $('#button-check').css({
-    'top': middlePosition.top - 40,
+    'top': middlePosition.top - 90,
     'left': middlePosition.left - 15
   });
 
@@ -119,6 +121,14 @@ function updateButtons() {
       });
     }
   );
+}
+
+function updateInputPosition() {
+  $('#word-input-wrapper')
+    .css({
+      'top': middlePosition.top - 120,
+      'left': middlePosition.left - inputWidth / 2
+    });
 }
 
 function toggleInput(showContainer, showCheck, showClose) {
@@ -241,11 +251,10 @@ function addButtonListeners() {
 
 function addInput() {
   middlePosition = $('.main-word__circle').position();
-  const inputWidth = 120;
 
   $('#word-input-wrapper')
     .css({
-      'top': middlePosition.top - 80,
+      'top': middlePosition.top - 120,
       'left': middlePosition.left - inputWidth / 2
     });
 
@@ -260,13 +269,13 @@ function addInput() {
       }
     });
 
-  updateButtons();
+  updateButtonPositions();
 
   addButtonListeners();
 
   $('#loading')
     .css({
-      'top': middlePosition.top - $('#loading').height() / 2 - 65,
+      'top': middlePosition.top - $('#loading').height() / 2 - 93,
       'left': middlePosition.left - $('#loading').width() / 2
     });
 
@@ -344,7 +353,7 @@ function getParams() {
     circleSize = [10, 30];
     textSize = [13, 30];
   } else {
-    margin = { top: 150, right: 150, bottom: 150, left: 150 };
+    margin = { top: 150, right: 150, bottom: 200, left: 150 };
     maxItems = 20;
     tickNumber = 3;
     circleSize = [10, 50];
@@ -370,7 +379,6 @@ function animateText() {
   });
 
   $('.info-legend').delay(1500).fadeTo(1000, 1);
-
 }
 
 function createURL(word) {
@@ -409,7 +417,7 @@ function submit(value) {
 
         toggleEventsOnContainer(true, true);
 
-        updateButtons();
+        updateButtonPositions();
 
         history.pushState({ 'text': newWord }, `Word - ${newWord}`, `?${newWord}`);
       }, error => {
@@ -444,7 +452,11 @@ function rerenderViz() {
 
       toggleEventsOnContainer(true, true);
 
-      updateButtons();
+      middlePosition = $('.main-word__circle').position();
+
+      updateButtonPositions();
+
+      updateInputPosition();
 
     }, error => {
 

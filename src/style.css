@@ -23,6 +23,7 @@ a:hover {
 
 .col-viz {
   height: 85vh;
+  overflow: hidden;
 }
 
 .col-info {
@@ -80,6 +81,11 @@ a:hover {
 .col-info img {
   width: 80%;
   margin: 0 9%;
+}
+
+img.info-key-diff {
+  width: 102%;
+  margin: 0 -1%;
 }
 
 .col-info .inner {
@@ -149,14 +155,26 @@ h3.info-intro-animate,
 }
 
 #options-wrapper {
-  position: absolute;
   width: 90%;
-  top: 0;
-  left: 5%;
+  margin: 0 5%;
   padding-bottom: 10px;
   border-bottom: 2px solid white;
   opacity: 0;
   font-size: 10px;
+}
+
+#words-wrapper {
+  height: 50px;
+  margin: 0 auto;
+  font-size: 13px;
+  color: white;
+  transform: translate(40%, 0);
+  opacity: 0;
+}
+
+.word-label {
+  float: left;
+  margin: 0 10px;
 }
 
 .option {
@@ -336,9 +354,6 @@ button.button-word-check {
   .masthead {
     width: 100vw;
   }
-  .col-viz {
-    height: auto;
-  }
   .col-info {
     position: absolute;
     right: 0;
@@ -349,7 +364,7 @@ button.button-word-check {
   }
   .col-info .visual,
   .col-info .data {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
   }
   .col-info .about {
     font-size: 1rem;
@@ -357,10 +372,17 @@ button.button-word-check {
   .col-info h3 {
     font-size: 1.1rem;
   }
+  img.info-key-diff {
+    width: 108%;
+    margin: 0 -3%;
+  }
+  #words-wrapper {
+    font-size: 18px;
+    transform: translate(40%, 0);
+  }
   #options-wrapper {
-    top: 60px;
     width: 80%;
-    left: 10%;
+    margin: 0 10%;
     font-size: 14px;
   }
   .option.active::after {
