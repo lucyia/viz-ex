@@ -413,13 +413,13 @@ function getParams() {
 }
 
 function animateText() {
-  $('.info-about').fadeTo(1000, 1);
-
-  $('.info-intro-animate').each(function (i) {
-    $(this).delay(200 * i).fadeTo(3000, 1);
+  $('.info-about').each(function (i) {
+    $(this).delay(1000 + 500 * i).fadeTo(2000, 1);
   });
 
-  $('.info-legend').delay(1500).fadeTo(1000, 1);
+  $('.info-intro-animate').each(function (i) {
+    $(this).delay(1500 + 200 * i).fadeTo(3000, 1);
+  });
 }
 
 function animateOptions() {
