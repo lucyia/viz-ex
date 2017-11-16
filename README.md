@@ -24,6 +24,18 @@ Data is taken from corpus management and analysis tool
 
 ## Demo
 
+### VizEx / Text Similarities Explorations
+This is an interactive visualization of a thesaurus – the view highlights the relationship between the central search word and its reference to other words used in context within the dataset.
+
+![VizEx Sim](https://github.com/lucyia/viz-ex/blob/master/info/vizex_technology.gif?raw=true)
+
+### VizEx / Text Differences Explorations
+
+This interactive visualization shows you the differences based on the frequency and contextual relationship between two query words within the same dataset – this visualisation is especially useful for understanding and articulating the data landscape of close synonyms and antonyms, for example research vs experiment.
+
+![VizEx Diff](https://raw.githubusercontent.com/lucyia/viz-ex/master/info/vizex_differences.gif)
+
+
 The live application can be accessed at [SkE Data Visualizations](lucyia.github.io/vizex/)
 
 
