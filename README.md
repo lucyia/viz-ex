@@ -16,12 +16,6 @@ The application is responsive and depending on the screen size, it adjusts the n
 Tooltip, notification information, loading, buttons and input are independently created to create a better user experience.
 
 
-## Data
-
-Data is taken from corpus management and analysis tool
-[SketchEngine](https://www.sketchengine.co.uk/).
-
-
 ## Demo
 
 ### VizEx / Text Similarities Explorations
@@ -37,6 +31,12 @@ This interactive visualization shows you the differences based on the frequency 
 
 
 The live application can be accessed at [SkE Data Visualizations](lucyia.github.io/vizex/)
+
+
+## Data
+
+Data is taken from corpus management and analysis tool
+[SketchEngine](https://www.sketchengine.co.uk/).
 
 
 ## License
