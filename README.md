@@ -1,4 +1,4 @@
-# Project-Starter
+# VizEx - Similarities and Differences of words visualized
 
 This is an interface for [SkE Data Visualizations](https://www.npmjs.com/package/ske-viz),
 which creates SVG panel containing text data visualization with animated and
@@ -24,7 +24,7 @@ Data is taken from corpus management and analysis tool
 
 ## Demo
 
-The live application can be accessed at [SkE Data Visualizations](lucyia.github.io/words-viz/)
+The live application can be accessed at [SkE Data Visualizations](lucyia.github.io/vizex/)
 
 
 ## License

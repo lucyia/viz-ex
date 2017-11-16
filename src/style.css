@@ -13,6 +13,9 @@ body {
 
 h1 {
   font-size: 1.95rem;
+  position: absolute;
+  top: 100px;
+  left: 260px;
 }
 
 a,
